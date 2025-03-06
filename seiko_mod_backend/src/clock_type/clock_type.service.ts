@@ -13,7 +13,11 @@ export class ClockTypeService {
 
     async getClocks(){
         try {
-            const clocks = await this.clockRepository.find()
+            const clocks = await this.clockRepository.find({
+                order: {
+                    created_at: 'ASC'
+                }
+            })
             return clocks;
         } catch (error) {
             throw new Error(error.message)

@@ -48,7 +48,6 @@ onMounted(() => {
     const getClockTypes = async () => {
         const response = await clockTypeService.getClockTypes()
         clockTypes.value = response
-        console.log(response)
     }
     getClockTypes()
 })

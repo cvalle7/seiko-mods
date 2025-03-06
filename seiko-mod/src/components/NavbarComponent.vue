@@ -1,15 +1,15 @@
 <template>
-    <nav class="nav-container" :class="{'little': !isHidden}">
+    <nav class="nav-container" :class="{ 'little': !isHidden }">
         <div class="logo">
-            <h2>Seiko Mods</h2>
+            <h2 @click="navigate('/')">Seiko Mods</h2>
             <button class="hamburguer" @click="isHide">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
         <ul class="list" :class="{ 'hide': isHidden }">
-            <li>Relojes</li>
-            <li>Configuración</li>
-            <li> <i class="fas fa-shopping-cart"></i> </li>
+            <li @click="navigate('/watches')">Relojes</li>
+            <li @click="navigate('/')">Configuración</li>
+            <li @click="navigate('/')"> <i class="fas fa-shopping-cart"></i> </li>
         </ul>
     </nav>
 </template>
@@ -17,10 +17,31 @@
 <script setup>
 import { ref } from 'vue'
 import '@fortawesome/fontawesome-free/css/all.css';
+import { useRouter } from 'vue-router'
+
+const route = useRouter();
 const isHidden = ref(true)
 
 const isHide = () => {
     isHidden.value = !isHidden.value
+}
+
+const navigate = (toRoute) => {
+
+    switch (toRoute) {
+        case '/':
+            if (route.currentRoute.value.path == '/') {
+                window.location.reload();
+            } else {
+                route.push(toRoute);
+            }
+            break;
+        default:
+            route.push(toRoute);
+            break;
+    }
+
+
 }
 </script>
 
@@ -56,8 +77,16 @@ const isHide = () => {
     margin: 0;
 }
 
+.list li {
+    cursor: pointer;
+}
+
 .hide {
     opacity: 1;
+}
+
+.logo h2 {
+    cursor: pointer;
 }
 
 @media (max-width: 768px) {
@@ -68,7 +97,7 @@ const isHide = () => {
         gap: 10%;
     }
 
-    .logo{
+    .logo {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -103,8 +132,16 @@ const isHide = () => {
         opacity: 0;
     }
 
-    .little{
+    .little {
         height: 20vh;
+    }
+
+    .list li {
+        cursor: pointer;
+    }
+
+    .logo h2 {
+        cursor: pointer;
     }
 }
 </style>

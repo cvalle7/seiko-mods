@@ -16,7 +16,7 @@ export class ClockType {
     description: string
 
     @Column({ nullable: false })
-    backgound_image: string
+    background_image: string
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     created_at: Date

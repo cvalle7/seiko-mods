@@ -27,36 +27,31 @@
             </div>
         </div>
     </CardComponent>
-    <CardComponent>
-        <div class="img-container is-visible" :style="{backgroundImage: `url('https://media.rolex.com/image/upload/v1725888690/rolexcom/collection/configurator/config-launcher/2024/config-launcher-watches-day-date-m228235-0055_2403jva_002.jpg')`}">
+    <CardComponent v-for="clock in clockTypes" :key="clock.id">
+        <div class="img-container is-visible" :style="{ backgroundImage: `url('${clock.background_image}')` }">
             <div class="text-left">
-                <h2>Aquí estoy porque he venido </h2>
-                <p>Porque he venido aquí estoy</p>
+                <h2>{{ clock.tittle }}</h2>
+                <p>{{ clock.description }}</p>
             </div>
         </div>
     </CardComponent>
-    <CardComponent>
-        <div class="img-container is-visible" :style="{backgroundImage: `url('https://www.joyeriamarcos.com/img/models/landscape/rolex-collection_banner-submariner.jpg')`}">
-            <div class="text-left">
-                <h2>Submarine </h2>
-                <p>El submarine surman</p>
-            </div>
-        </div>
-    </CardComponent>
-
-    <CardComponent>
-        <div class="img-container is-visible" :style="{backgroundImage: `url('https://www.rabat.net/es/magazine/wp-content/uploads/2024/12/2000x920.jpg')`}">
-            <div class="text-left">
-                <h2>GMT-Master II </h2>
-                <p>El reloj de los masters</p>
-            </div>
-        </div>
-    </CardComponent>
-
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
 import CardComponent from '@/components/CardComponent.vue';
+import clockTypeService from '@/services/clockTypes.service'
+
+const clockTypes = ref([])
+
+onMounted(() => {
+    const getClockTypes = async () => {
+        const response = await clockTypeService.getClockTypes()
+        clockTypes.value = response
+        console.log(response)
+    }
+    getClockTypes()
+})
 
 </script>
 
@@ -90,14 +85,6 @@ import CardComponent from '@/components/CardComponent.vue';
     display: flex;
     align-items: flex-end;
     justify-content: flex-start;
-}
-
-.a-background{
-    background-image: url('https://media.rolex.com/image/upload/v1725888690/rolexcom/collection/configurator/config-launcher/2024/config-launcher-watches-day-date-m228235-0055_2403jva_002.jpg');
-}
-
-.b-background{
-    background-image: url('https://www.joyeriamarcos.com/img/models/landscape/rolex-collection_banner-submariner.jpg');
 }
 
 .text-left {
@@ -136,5 +123,32 @@ import CardComponent from '@/components/CardComponent.vue';
     width: 30%;
     font-size: 1rem;
     text-align: left;
+}
+
+@media (max-width: 768px) {
+
+    .text-container {
+        font-size: 2rem;
+    }
+
+    .text-container-description {
+        height: 30vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 7%;
+    }
+
+    .text-desc-left {
+        width: 100%;
+        color: #157A4C;
+        font-size: 0.7rem;
+    }
+
+    .text-desc-right {
+        width: 80%;
+        font-size: 1rem;
+        text-align: left;
+    }
 }
 </style>

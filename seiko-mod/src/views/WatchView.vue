@@ -8,5 +8,12 @@
 </script>
 
 <style scoped>
-
+.watch-container {
+    position: fixed;
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 </style>

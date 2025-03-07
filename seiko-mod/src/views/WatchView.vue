@@ -8,6 +8,18 @@
                 </li>
             </ul>
         </div>
+
+        <div class="div-aux" v-if="familySelected.name === 'Todos'">
+            <WatchContainerComponent v-for="family in watchFamily" :key="family.id" :family-watch="family">
+            </WatchContainerComponent>
+
+        </div>
+
+        <div class="div-aux" v-else>
+            <WatchContainerComponent :family-watch="familySelected">
+            </WatchContainerComponent>
+        </div>
+
     </div>
 </template>
 
@@ -15,6 +27,7 @@
 
 import { onMounted, ref } from "vue"
 import clockTypeService from '@/services/clockTypes.service'
+import WatchContainerComponent from "@/components/WatchContainerComponent.vue"
 
 const watchFamily = ref([])
 const familySelected = ref('')
@@ -38,10 +51,11 @@ onMounted(() => {
 .watch-container {
     position: fixed;
     width: 100%;
-    height: auto;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 .watch-bar {
@@ -76,6 +90,18 @@ onMounted(() => {
 .selected {
     list-style: disc;
     color: #135A3A;
+}
+
+.div-aux {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-y: auto;
+    scrollbar-width: none;
+    padding-bottom: 4%;
 }
 
 @media (max-width: 760px) {

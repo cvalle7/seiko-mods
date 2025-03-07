@@ -27,7 +27,7 @@ const isHide = () => {
 }
 
 const navigate = (toRoute) => {
-
+    isHidden.value = true;
     switch (toRoute) {
         case '/':
             if (route.currentRoute.value.path == '/') {

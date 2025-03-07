@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClockTypeModule } from './clock_type/clock_type.module';
 import { ClockType } from './clock_type/clock_type.entity';
+import { WatchModule } from './watch/watch.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { ClockType } from './clock_type/clock_type.entity';
         entities: [ClockType],
         synchronize: true
       }),
-    ClockTypeModule],
+    ClockTypeModule,
+    WatchModule],
   controllers: [],
   providers: [],
 })

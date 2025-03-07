@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Watch } from "src/watch/watch.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('clock_type')
 export class ClockType {
@@ -23,5 +24,8 @@ export class ClockType {
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     updated_at: Date
+
+    @OneToMany(() => Watch, (watch) => watch.type)
+    watchs: Watch[]
 
 }

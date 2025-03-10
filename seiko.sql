@@ -58,11 +58,11 @@ ALTER TABLE public.clock_type ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 CREATE TABLE public.watch (
     id integer NOT NULL,
     name character varying NOT NULL,
-    clock_type_id integer NOT NULL,
-    background_image character varying,
-    created_at timestamp with time zone DEFAULT now(),
-    updated_at timestamp with time zone DEFAULT now(),
-    price integer NOT NULL
+    clock_type_id integer,
+    background_image character varying NOT NULL,
+    price integer NOT NULL,
+    created_at timestamp without time zone DEFAULT now() NOT NULL,
+    updated_at timestamp without time zone DEFAULT now() NOT NULL
 );
 
 
@@ -98,7 +98,12 @@ COPY public.clock_type (id, name, tittle, description, created_at, updated_at, b
 -- Data for Name: watch; Type: TABLE DATA; Schema: public; Owner: seikomoduser
 --
 
-COPY public.watch (id, name, clock_type_id, background_image, created_at, updated_at, price) FROM stdin;
+COPY public.watch (id, name, clock_type_id, background_image, price, created_at, updated_at) FROM stdin;
+2	Gold Wimbledon	3	https://www.joyeriaolazabal.com/rolex/assets/img/pages/portrait/rolex-watches/watch_assets/upright_watches_assets/m126333-0019_drp-upright-bba-with-shadow.png	260	2025-03-10 12:51:43.112615	2025-03-10 12:51:43.112615
+3	Gold	3	https://saphirjoyeros.com/rolex/assets/img/pages/portrait/rolex-watches/watch_assets/upright_watches_assets/m126333-0010_drp-upright-bba-with-shadow.png	260	2025-03-10 12:51:43.112615	2025-03-10 12:51:43.112615
+4	Wimbledon	3	https://rolex.ultrajewels.com/media/catalog/product//2/5/257826014_M126201_0013_01_48ab.png	260	2025-03-10 12:51:43.112615	2025-03-10 12:51:43.112615
+5	Silver	4	https://www.ap-watches.com/ap-watches/fotos/audemars-piguet-royal-oak-15500st-41mm-nuevo-con-plasticos-id14793-1603465073.png	300	2025-03-10 18:52:33.554348	2025-03-10 18:52:33.554348
+6	Gold	4	https://cdn11.bigcommerce.com/s-bc02e/images/stencil/1280x1280/products/108305/121285/watch-1.png.transform.appdpmaintabwide__14911.1670535894.png?c=2	300	2025-03-10 18:52:33.554348	2025-03-10 18:52:33.554348
 \.
 
 
@@ -113,7 +118,7 @@ SELECT pg_catalog.setval('public.clock_type_id_seq', 4, true);
 -- Name: watch_id_seq; Type: SEQUENCE SET; Schema: public; Owner: seikomoduser
 --
 
-SELECT pg_catalog.setval('public.watch_id_seq', 1, false);
+SELECT pg_catalog.setval('public.watch_id_seq', 6, true);
 
 
 --
@@ -133,11 +138,11 @@ ALTER TABLE ONLY public.watch
 
 
 --
--- Name: watch watch_clock_type_fk; Type: FK CONSTRAINT; Schema: public; Owner: seikomoduser
+-- Name: watch FK_3831ccb0459307ecfb1faa9db5f; Type: FK CONSTRAINT; Schema: public; Owner: seikomoduser
 --
 
 ALTER TABLE ONLY public.watch
-    ADD CONSTRAINT watch_clock_type_fk FOREIGN KEY (clock_type_id) REFERENCES public.clock_type(id) ON DELETE CASCADE;
+    ADD CONSTRAINT "FK_3831ccb0459307ecfb1faa9db5f" FOREIGN KEY (clock_type_id) REFERENCES public.clock_type(id) ON DELETE CASCADE;
 
 
 --

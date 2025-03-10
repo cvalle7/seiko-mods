@@ -104,7 +104,7 @@ onMounted(() => {
     padding-bottom: 4%;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 768px) {
     .watch-bar {
         margin-top: 2%;
         width: 100%;

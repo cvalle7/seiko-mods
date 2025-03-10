@@ -16,10 +16,13 @@
             <h2>Relojes Favoritos</h2>
             <p>Tu selección de relojes</p>
         </div>
-        <div class="fav-watches-container">
+        <div class="fav-watches-container" v-if="favWatches.length !== 0">
             <div class="w-container" v-for="watch in favWatches" :key="watch.id">
                 <WatchCardComponent :watch="watch"></WatchCardComponent>
             </div>
+        </div>
+        <div class="no-fav" v-else>
+            Todavía no tienes relojes favoritos.
         </div>
     </div>
 </template>
@@ -146,6 +149,15 @@ watch(() => favStore.favs, () => {
     margin-bottom: 5%;
 }
 
+.no-fav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: grey;
+    font-size: 3rem;
+    margin-top: 2%;
+}
+
 @media(max-width: 768px) {
 
     .info-container {
@@ -188,6 +200,12 @@ watch(() => favStore.favs, () => {
 
     .link {
         width: 100%;
+    }
+
+    .no-fav {
+        font-size: 2rem;
+        margin-top: 10%;
+        width: 80%;
     }
 
 }

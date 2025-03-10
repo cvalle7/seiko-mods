@@ -40,8 +40,6 @@ const navigate = (toRoute) => {
             route.push(toRoute);
             break;
     }
-
-
 }
 </script>
 

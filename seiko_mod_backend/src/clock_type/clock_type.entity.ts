@@ -26,6 +26,6 @@ export class ClockType {
     updated_at: Date
 
     @OneToMany(() => Watch, (watch) => watch.type)
-    watchs: Watch[]
+    watches: Watch[]
 
 }

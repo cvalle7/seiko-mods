@@ -16,6 +16,9 @@ export class ClockTypeService {
             const clocks = await this.clockRepository.find({
                 order: {
                     created_at: 'ASC'
+                },
+                relations:{
+                    watches: true
                 }
             })
             return clocks;

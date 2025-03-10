@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClockTypeModule } from './clock_type/clock_type.module';
 import { ClockType } from './clock_type/clock_type.entity';
 import { WatchModule } from './watch/watch.module';
+import { Watch } from './watch/watch.entity';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { WatchModule } from './watch/watch.module';
         username: process.env.BD_USERNAME,
         password: process.env.BD_PASSWORD,
         database: process.env.BD_DATABASE,
-        entities: [ClockType],
+        entities: [ClockType, Watch],
         synchronize: true
       }),
     ClockTypeModule,

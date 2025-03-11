@@ -5,38 +5,42 @@
         <div class="actions-container">
             <p class="fav" :class="{ 'fav-selected': isSelected }" @click="toggleFav"><i class="fas fa-heart"></i></p>
             <p class="price">{{ watch.price }}€</p>
-            <p class="buy" :class="{ 'buy-selected': buySelected }" @click="toggleBuy"><i
-                    class="fas fa-shopping-cart"></i></p>
+            <p class="buy" :class="{ 'buy-selected': isShop }" @click="toggleBuy"><i class="fas fa-shopping-cart"></i>
+            </p>
         </div>
     </div>
 </template>
 
 <script setup>
 
-import { defineProps, ref, computed } from 'vue';
+import { defineProps, computed } from 'vue';
 import useFavStore from "@/stores/fav.store.js"
+import useShopStore from '@/stores/shop.store';
 
 const favStore = useFavStore();
-const favSelected = ref(false);
-const buySelected = ref(false);
+const shopStore = useShopStore();
 
 const isSelected = computed(() => favStore.favs.includes(props.watch.id));
+const isShop = computed(() => shopStore.shopList.some(s => s.id === props.watch.id))
 
 const toggleFav = () => {
 
     const find = favStore.favs.find(f => f === props.watch.id);
     if (!find) {
-        favSelected.value = true;
         favStore.setFavs(props.watch.id)
 
     } else {
-        favSelected.value = false;
         favStore.removeFav(props.watch.id)
     }
 }
 
 const toggleBuy = () => {
-    buySelected.value = !buySelected.value;
+    if(shopStore.shopList.some(s => s.id === props.watch.id)){
+        shopStore.removeToShop(props.watch.id);
+    }else{
+        shopStore.addToShop(props.watch.id);
+    }
+    console.log(shopStore.shopList)
 };
 
 const props = defineProps({

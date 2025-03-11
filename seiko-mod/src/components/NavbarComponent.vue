@@ -9,7 +9,7 @@
         <ul class="list" :class="{ 'hide': isHidden }">
             <li @click="navigate('/watches')">Relojes</li>
             <li @click="navigate('/fav')">Favoritos</li>
-            <li @click="navigate('/shop')"> <i class="fas fa-shopping-cart"></i> </li>
+            <li @click="navigate('/shop')"> <i class="fas fa-shopping-cart cart"><span v-if="shopStore.shopList.length > 0">{{ shopStore.shopList.length }}</span></i></li>
         </ul>
     </nav>
 </template>
@@ -18,9 +18,11 @@
 import { ref } from 'vue'
 import '@fortawesome/fontawesome-free/css/all.css';
 import { useRouter } from 'vue-router'
+import useShopStore from '@/stores/shop.store';
 
 const route = useRouter();
 const isHidden = ref(true)
+const shopStore = useShopStore();
 
 const isHide = () => {
     isHidden.value = !isHidden.value
@@ -44,6 +46,22 @@ const navigate = (toRoute) => {
 </script>
 
 <style scoped>
+.cart {
+    position: relative;
+}
+
+.cart span {
+    position: absolute;
+    top: -10px;
+    right: -15px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.5rem;
+    font-weight: bold;
+}
+
 .nav-container {
     position: fixed;
     top: 0;

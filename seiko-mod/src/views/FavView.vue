@@ -33,12 +33,15 @@ import { useRouter } from 'vue-router'
 import watchService from '@/services/watch.service'
 import useFavStore from "@/stores/fav.store.js"
 import WatchCardComponent from '@/components/WatchCardComponent.vue'
+import useFamilyStore from '@/stores/family.store'
 
 const favWatches = ref([])
 const favStore = useFavStore()
 const route = useRouter()
+const familyStore = useFamilyStore();
 
 const navWatch = () => {
+    familyStore.removeFamily()
     route.push('/watches')
 }
 

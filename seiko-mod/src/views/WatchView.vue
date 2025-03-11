@@ -28,22 +28,33 @@
 import { onMounted, ref } from "vue"
 import clockTypeService from '@/services/clockTypes.service'
 import WatchContainerComponent from "@/components/WatchContainerComponent.vue"
+import useFamilyStore from "@/stores/family.store"
 
 const watchFamily = ref([])
 const familySelected = ref('')
+const familyStore = useFamilyStore()
 
 const selectFamily = (family) => {
     familySelected.value = family
 }
 
-onMounted(() => {
+onMounted(async () => {
     const getWatchFamily = async () => {
         watchFamily.value = await clockTypeService.getClockTypes();
         watchFamily.value.unshift({ name: 'Todos' });
         familySelected.value = watchFamily.value[0];
     }
 
-    getWatchFamily()
+    const checkFamilySelecte = () => {
+        if (familyStore.family) {
+            const array = watchFamily.value
+            const find = array.find(w => w.name === familyStore.family);
+            familySelected.value = find;
+        }
+    }
+
+    await getWatchFamily()
+    checkFamilySelecte()
 })
 </script>
 

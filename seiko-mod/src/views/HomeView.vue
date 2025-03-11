@@ -30,8 +30,8 @@
     <CardComponent v-for="clock in clockTypes" :key="clock.id">
         <div class="img-container is-visible" :style="{ backgroundImage: `url('${clock.background_image}')` }">
             <div class="text-left">
-                <h2>{{ clock.tittle }}</h2>
-                <p>{{ clock.description }}</p>
+                <h2>{{ clock.name }}</h2>
+                <p @click="navigateWatches(clock.name)">{{ clock.description }} ></p>
             </div>
         </div>
     </CardComponent>
@@ -41,15 +41,26 @@
 import { ref, onMounted } from 'vue'
 import CardComponent from '@/components/CardComponent.vue';
 import clockTypeService from '@/services/clockTypes.service'
+import { useRouter } from 'vue-router';
+import useFamilyStore from '@/stores/family.store';
+
 
 const clockTypes = ref([])
+const router = useRouter()
+const familyStore = useFamilyStore()
+
+const navigateWatches = (family) => {
+    familyStore.setFamily(family)
+    router.push('/watches')
+}
 
 onMounted(() => {
     const getClockTypes = async () => {
         const response = await clockTypeService.getClockTypes()
         clockTypes.value = response
     }
-    getClockTypes()
+    getClockTypes();
+    familyStore.removeFamily();
 })
 
 </script>
@@ -93,6 +104,15 @@ onMounted(() => {
     align-items: flex-start;
     padding-left: 3%;
     padding-bottom: 3%;
+}
+
+.text-left p {
+    transition: color 0.4s ease;
+}
+
+.text-left p:hover {
+    color: grey;
+    cursor: pointer;
 }
 
 .is-visible {

@@ -1,18 +1,42 @@
 <template>
     <div class="shop-main-container">
         <div class="shop-container" v-if="watchList.length !== 0">
-            <ShopCardComponent v-for="w in watchList" :key="w.id" :watchItem="w"></ShopCardComponent>
-            <div class="total-amount">
-                <div class="price-box">
-                    <p>Total: </p>
-                    <p class="price">{{ getTotalAmount }}€</p>
-                </div>
+            <div v-if="step === 0">
+                <ShopCardComponent v-for="w in watchList" :key="w.id" :watchItem="w"></ShopCardComponent>
+                <div class="total-amount">
+                    <div class="price-box">
+                        <p>Total: </p>
+                        <p class="price">{{ getTotalAmount }}€</p>
+                    </div>
 
-                <button class="continue">
-                    Continue
-                </button>
+                    <button class="continue" @click="step = 1">
+                        Continue
+                    </button>
+                </div>
             </div>
+
+            <form @submit.prevent="saveDirection" class="direction-form" v-if="step === 1">
+                <label>Datos personales</label>
+                <input type="text" placeholder="Nombre" v-model="nombre" required />
+                <input type="text" placeholder="Apellidos" v-model="apellidos" required />
+                <input type="text" placeholder="Teléfono" v-model="telefono" required />
+                <input type="email" placeholder="Email" v-model="email" required />
+                <input type="number" placeholder="Código postal" v-model="cp" required />
+                <input type="text" placeholder="Ciudad" v-model="ciudad" required />
+                <input type="text" placeholder="Localidad" v-model="localidad" required />
+                <input type="text" placeholder="Dirección" v-model="direcion" required />
+                <div class="back-to-cart">
+                    <input class="back-cart" type="button" value="Volver" @click="step = 0">
+                    <input class="continue" type="submit" value="Continuar">
+                </div>
+            </form>
+
+            <div class="resume" v-if="step === 2">
+                {{ payObject }}
+            </div>
+
         </div>
+
 
         <div class="shop-container-empty" v-else>
             <h1>No hay elementos en el carro</h1>
@@ -24,6 +48,7 @@
 <script setup>
 import ShopCardComponent from '@/components/ShopCardComponent.vue';
 import watchService from '@/services/watch.service';
+import useFamilyStore from '@/stores/family.store';
 import useShopStore from '@/stores/shop.store';
 import { watch, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
@@ -31,6 +56,19 @@ import { useRouter } from 'vue-router';
 const shopStore = useShopStore();
 const watchList = ref([]);
 const router = useRouter()
+const familyStore = useFamilyStore();
+const step = ref(1)
+
+const nombre = ref('');
+const apellidos = ref('');
+const telefono = ref('');
+const email = ref('');
+const cp = ref();
+const ciudad = ref('');
+const localidad = ref('');
+const direcion = ref('');
+
+const payObject = ref();
 
 
 const getTotalAmount = computed(() => {
@@ -45,7 +83,35 @@ const getTotalAmount = computed(() => {
 })
 
 const navigate = () => {
+    familyStore.removeFamily();
     router.push('/watches');
+}
+
+const saveDirection = () => {
+
+    const wlist = watchList.value.map(l => {return {id: l.id}});
+    
+    const payment = {
+        ids: wlist,
+        pay: getTotalAmount.value
+    }
+
+    const direcionData = {
+        nombre: nombre.value,
+        apellidos: apellidos.value,
+        telefono: telefono.value,
+        email: email.value,
+        cp: cp.value,
+        ciudad: ciudad.value,
+        localidad: localidad.value,
+        direcion: direcion.value,
+    }
+    payObject.value = {
+        paymet: payment,
+        direcion: direcionData
+    }
+
+    step.value = 2
 }
 
 const loadWatchList = async () => {
@@ -61,6 +127,59 @@ watch(() => shopStore.shopList, loadWatchList, { immediate: true });
 </script>
 
 <style scoped>
+.hidden {
+    display: none;
+}
+
+.direction-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.direction-form input {
+    margin: 1%;
+    width: 50%;
+    height: 2.5vh;
+    border: none;
+    border-radius: 1rem;
+    padding: 1%;
+    font-size: 1rem;
+}
+
+.direction-form label {
+    width: 70%;
+    margin-bottom: 8%;
+    font-size: 2rem;
+}
+
+.back-to-cart {
+    width: 100%;
+    margin-top: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 15%;
+}
+
+.back-to-cart input {
+    width: 30%;
+    height: 4vh;
+}
+
+.back-cart {
+    background-color: #3FC1D7;
+    color: white;
+    font-weight: 600;
+    transition: background-color 0.4s ease;
+    cursor: pointer;
+}
+
+.back-cart:hover {
+    background-color: #298494;
+}
+
 .shop-main-container {
     display: flex;
     align-items: center;
@@ -76,6 +195,7 @@ watch(() => shopStore.shopList, loadWatchList, { immediate: true });
     justify-content: center;
     width: 30%;
     background-color: #f6f5f3;
+    text-align: left;
 }
 
 .shop-container-empty {
@@ -116,7 +236,7 @@ watch(() => shopStore.shopList, loadWatchList, { immediate: true });
     font-weight: 600;
 }
 
-.continue{
+.continue {
     border: none;
     background-color: #157a4d;
     border-radius: 15px;
@@ -127,8 +247,20 @@ watch(() => shopStore.shopList, loadWatchList, { immediate: true });
     transition: background-color 0.4s ease;
 }
 
-.continue:hover{
+.continue:hover {
     background-color: #135A3A;
     cursor: pointer;
+}
+
+@media(max-width: 992px) {
+    .shop-container {
+        margin-top: 25%;
+        width: 90%;
+    }
+
+    .shop-container-empty {
+        margin-top: 20%;
+        width: 90%;
+    }
 }
 </style>

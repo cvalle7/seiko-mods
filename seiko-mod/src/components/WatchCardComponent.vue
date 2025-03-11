@@ -40,7 +40,6 @@ const toggleBuy = () => {
     }else{
         shopStore.addToShop(props.watch.id);
     }
-    console.log(shopStore.shopList)
 };
 
 const props = defineProps({

@@ -3,7 +3,7 @@
         <div class="shop-container">
             <img :src="watchItem.background_image" />
             <div class="text-box">
-                <p>{{ watchItem.name }}</p>
+                <p class="tittle">{{ watchItem.name }}</p>
                 <p>{{ watchItem.price }} €</p>
             </div>
             <div class="moreless">
@@ -87,6 +87,11 @@ const getAmount = computed(() => { return shopStore.shopList.find(s => s.id === 
     justify-content: center;
     align-items: center;
     width: 10vh;
+    font-weight: 600;
+}
+
+.tittle {
+    font-weight: 600;
 }
 
 .moreless {
@@ -117,7 +122,7 @@ const getAmount = computed(() => { return shopStore.shopList.find(s => s.id === 
     border-bottom-right-radius: 15px;
 }
 
-.erase{
+.erase {
     color: rgb(252, 52, 52);
     font-size: 1.2rem;
     text-align: center;
@@ -127,7 +132,7 @@ const getAmount = computed(() => { return shopStore.shopList.find(s => s.id === 
     transition: color 0.3s ease;
 }
 
-.erase:hover{
+.erase:hover {
     cursor: pointer;
     color: rgb(180, 0, 0);
 }

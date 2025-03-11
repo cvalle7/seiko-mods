@@ -9,7 +9,7 @@
         <ul class="list" :class="{ 'hide': isHidden }">
             <li @click="navigate('/watches')">Relojes</li>
             <li @click="navigate('/fav')">Favoritos</li>
-            <li @click="navigate('/')"> <i class="fas fa-shopping-cart"></i> </li>
+            <li @click="navigate('/shop')"> <i class="fas fa-shopping-cart"></i> </li>
         </ul>
     </nav>
 </template>

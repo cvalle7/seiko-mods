@@ -41,9 +41,6 @@ const setItems = (watchList, payObject) => {
 
 const generateMailContent = (watchList, payObject) => {
 
-    console.log(watchList)
-    console.log(payObject)
-
     let htmlItem = setItems(watchList, payObject);
 
 

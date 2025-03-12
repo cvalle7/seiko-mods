@@ -32,13 +32,31 @@
             </form>
 
             <div class="resume" v-if="step === 2">
-                {{ payObject }}
-            </div>
+                <p class="resume-tittle">Confirmación del pedido</p>
+                <div class="resume-container">
+                    <ShopCardComponent v-for="w in watchList" :key="w.id" :watchItem="w" :resume="true">
+                    </ShopCardComponent>
+                </div>
 
+                <p class="resume-tittle">Dirección de entrega</p>
+                <div class="resume-container">
+                    <p>{{ nombre }} {{ apellidos }}, {{ telefono }}</p>
+                    <p>{{ direcion }}</p>
+                    <p>{{ ciudad }}, {{ localidad }}, {{ cp }}</p>
+                </div>
+                <p class="resume-tittle">Resumen</p>
+                <div class="resume-container">
+                    <p>Total: <b>{{ getTotalAmount }}€</b></p>
+                </div>
+                <div class="back-to-cart">
+                    <button class="back-cart" @click="step = 1">Volver</button>
+                    <button class="continue" @click="sendMail">Pagar</button>
+                </div>
+            </div>
         </div>
 
-
         <div class="shop-container-empty" v-else>
+            <h1 v-if="comprado">Compra realizada correctamente!</h1>
             <h1>No hay elementos en el carro</h1>
             <p @click="navigate">Date una vuelta por la tienda! ></p>
         </div>
@@ -47,6 +65,7 @@
 
 <script setup>
 import ShopCardComponent from '@/components/ShopCardComponent.vue';
+import shopService from '@/services/shop.service';
 import watchService from '@/services/watch.service';
 import useFamilyStore from '@/stores/family.store';
 import useShopStore from '@/stores/shop.store';
@@ -57,8 +76,7 @@ const shopStore = useShopStore();
 const watchList = ref([]);
 const router = useRouter()
 const familyStore = useFamilyStore();
-const step = ref(1)
-
+const step = ref(0)
 const nombre = ref('');
 const apellidos = ref('');
 const telefono = ref('');
@@ -67,9 +85,8 @@ const cp = ref();
 const ciudad = ref('');
 const localidad = ref('');
 const direcion = ref('');
-
 const payObject = ref();
-
+const comprado = ref(false);
 
 const getTotalAmount = computed(() => {
     let total = 0;
@@ -89,10 +106,8 @@ const navigate = () => {
 
 const saveDirection = () => {
 
-    const wlist = watchList.value.map(l => {return {id: l.id}});
-    
     const payment = {
-        ids: wlist,
+        watchs: shopStore.shopList,
         pay: getTotalAmount.value
     }
 
@@ -107,7 +122,7 @@ const saveDirection = () => {
         direcion: direcion.value,
     }
     payObject.value = {
-        paymet: payment,
+        payment: payment,
         direcion: direcionData
     }
 
@@ -122,11 +137,37 @@ const loadWatchList = async () => {
     }
 };
 
+const sendMail = async () => {
+    let mailContent = shopService.generateMailContent(watchList.value, payObject.value);
+    await shopService.sendData(payObject.value, mailContent);
+    step.value = 0
+    shopStore.shopList = [];
+    comprado.value = true;
+}
+
 watch(() => shopStore.shopList, loadWatchList, { immediate: true });
 
 </script>
 
 <style scoped>
+.resume {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.resume-container {
+    width: 70%;
+    padding: 2%;
+    background-color: white;
+}
+
+.resume-tittle {
+    width: 73%;
+    font-size: 1.5rem;
+}
+
 .hidden {
     display: none;
 }
@@ -166,6 +207,13 @@ watch(() => shopStore.shopList, loadWatchList, { immediate: true });
 .back-to-cart input {
     width: 30%;
     height: 4vh;
+}
+
+.back-to-cart button {
+    width: 30%;
+    height: 4vh;
+    border: none;
+    border-radius: 15px;
 }
 
 .back-cart {
@@ -261,6 +309,27 @@ watch(() => shopStore.shopList, loadWatchList, { immediate: true });
     .shop-container-empty {
         margin-top: 20%;
         width: 90%;
+    }
+
+    .direction-form input {
+        margin: 1%;
+        width: 80%;
+        height: 4vh;
+    }
+
+    .direction-form label {
+        width: 70%;
+        margin: 8% 0;
+        font-size: 1.5rem;
+    }
+
+    .back-to-cart {
+        margin-bottom: 8%;
+    }
+
+    .back-to-cart input {
+        width: 30%;
+        height: 4vh;
     }
 }
 </style>

@@ -5,6 +5,9 @@ import { ClockTypeModule } from './clock_type/clock_type.module';
 import { ClockType } from './clock_type/clock_type.entity';
 import { WatchModule } from './watch/watch.module';
 import { Watch } from './watch/watch.entity';
+import { ShopModule } from './shop/shop.module';
+import { MailService } from './mail/mail.service';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -23,8 +26,10 @@ import { Watch } from './watch/watch.entity';
         synchronize: true
       }),
     ClockTypeModule,
-    WatchModule],
+    WatchModule,
+    ShopModule,
+    MailModule],
   controllers: [],
-  providers: [],
+  providers: [MailService],
 })
 export class AppModule {}

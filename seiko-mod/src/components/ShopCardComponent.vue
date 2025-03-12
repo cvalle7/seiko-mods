@@ -6,12 +6,12 @@
                 <p class="tittle">{{ watchItem.name }}</p>
                 <p>{{ watchItem.price }} €</p>
             </div>
-            <div class="moreless">
+            <div class="moreless" v-if="!resume">
                 <button class="more" @click="moreA">+</button>
                 <button class="less" @click="lessA">-</button>
             </div>
             <p class="amount">{{ getAmount }}</p>
-            <p class="erase" @click="eraseFrom"><i class="fas fa-trash"></i></p>
+            <p v-if="!resume" class="erase" @click="eraseFrom"><i class="fas fa-trash"></i></p>
         </div>
     </div>
 </template>
@@ -26,6 +26,10 @@ const props = defineProps({
     watchItem: {
         type: Object,
         required: true,
+    },
+    resume: {
+        type:Boolean,
+        required: false
     }
 })
 

@@ -50,7 +50,7 @@
                 </div>
                 <div class="back-to-cart">
                     <button class="back-cart" @click="step = 1">Volver</button>
-                    <button class="continue" @click="sendMail">Pagar</button>
+                    <PaypalButtonComponent :amount="getTotalAmount" @payment-success="sendMail"/>
                 </div>
             </div>
         </div>
@@ -64,6 +64,7 @@
 </template>
 
 <script setup>
+import PaypalButtonComponent from '@/components/PaypalButtonComponent.vue';
 import ShopCardComponent from '@/components/ShopCardComponent.vue';
 import shopService from '@/services/shop.service';
 import watchService from '@/services/watch.service';

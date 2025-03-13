@@ -49,7 +49,6 @@ const initPayPalButton = () => {
     onApprove: async (data, actions) => {
         console.log(actions)
       try {
-        console.log("Pago aprobado:", data);
         const captureResponse = await captureOrder(data.orderID);
         if (captureResponse) {
           alert('Pago exitoso');

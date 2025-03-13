@@ -103,7 +103,13 @@ COPY public.watch (id, name, clock_type_id, background_image, price, created_at,
 3	Gold	3	https://saphirjoyeros.com/rolex/assets/img/pages/portrait/rolex-watches/watch_assets/upright_watches_assets/m126333-0010_drp-upright-bba-with-shadow.png	260	2025-03-10 12:51:43.112615	2025-03-10 12:51:43.112615
 4	Wimbledon	3	https://rolex.ultrajewels.com/media/catalog/product//2/5/257826014_M126201_0013_01_48ab.png	260	2025-03-10 12:51:43.112615	2025-03-10 12:51:43.112615
 5	Silver	4	https://www.ap-watches.com/ap-watches/fotos/audemars-piguet-royal-oak-15500st-41mm-nuevo-con-plasticos-id14793-1603465073.png	300	2025-03-10 18:52:33.554348	2025-03-10 18:52:33.554348
-6	Gold	4	https://cdn11.bigcommerce.com/s-bc02e/images/stencil/1280x1280/products/108305/121285/watch-1.png.transform.appdpmaintabwide__14911.1670535894.png?c=2	300	2025-03-10 18:52:33.554348	2025-03-10 18:52:33.554348
+9	gold	2	https://media.rolex.com/image/upload/q_auto:eco/f_auto/t_v7-majesty/c_limit,w_3840/v1/catalogue/2024/upright-c/m126618lb-0002	250	2025-03-13 14:27:16.34554	2025-03-13 14:27:16.34554
+10	Grey	2	https://media.rolex.com/image/upload/q_auto:eco/f_auto/t_v7-majesty/c_limit,w_3840/v1/catalogue/2024/upright-c/m126610ln-0001	250	2025-03-13 14:27:16.34554	2025-03-13 14:27:16.34554
+12	Pepsi	1	https://media.rolex.com/image/upload/q_auto:eco/f_auto/t_v7-majesty/c_limit,w_3840/v1/catalogue/2024/upright-c/m126710blro-0002	280	2025-03-13 14:27:16.34554	2025-03-13 14:27:16.34554
+13	Batman	1	https://media.rolex.com/image/upload/q_auto:eco/f_auto/t_v7-majesty/c_limit,w_3840/v1/catalogue/2024/upright-c/m126710blnr-0002	280	2025-03-13 14:27:16.34554	2025-03-13 14:27:16.34554
+11	grey-gold	1	https://media.rolex.com/image/upload/q_auto:eco/f_auto/t_v7-majesty/c_limit,w_3840/v1/catalogue/2024/upright-c/m126713grnr-0001	280	2025-03-13 14:27:16.34554	2025-03-13 14:27:16.34554
+6	Gold	4	https://www.ap-watches.com/ap-watches/fotos/audemars-piguet-royal-oak-cronografo-25960ba-oro-amarillo-completo-id15309-1669046207.png	300	2025-03-10 18:52:33.554348	2025-03-10 18:52:33.554348
+15	Leather	4	https://www.ap-watches.com/ap-watches/fotos/audemars-piguet-royal-oak-15300or-39mm-id14788-1603465523.png	300	2025-03-13 14:32:29.892612	2025-03-13 14:32:29.892612
 \.
 
 
@@ -118,7 +124,7 @@ SELECT pg_catalog.setval('public.clock_type_id_seq', 4, true);
 -- Name: watch_id_seq; Type: SEQUENCE SET; Schema: public; Owner: seikomoduser
 --
 
-SELECT pg_catalog.setval('public.watch_id_seq', 6, true);
+SELECT pg_catalog.setval('public.watch_id_seq', 15, true);
 
 
 --

@@ -8,6 +8,7 @@ import { Watch } from './watch/watch.entity';
 import { ShopModule } from './shop/shop.module';
 import { MailService } from './mail/mail.service';
 import { MailModule } from './mail/mail.module';
+import { PaypalModule } from './paypal/paypal.module';
 
 @Module({
   imports: [
@@ -28,7 +29,8 @@ import { MailModule } from './mail/mail.module';
     ClockTypeModule,
     WatchModule,
     ShopModule,
-    MailModule],
+    MailModule,
+    PaypalModule],
   controllers: [],
   providers: [MailService],
 })

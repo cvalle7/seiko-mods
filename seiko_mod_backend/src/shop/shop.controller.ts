@@ -7,9 +7,9 @@ export class ShopController {
     constructor(private readonly shopService: ShopService){}
 
     @Post()
-    shopRegister(@Body() data: {inputData: any,  mailContent: any}){
-        const {inputData, mailContent} = data;
-        this.shopService.shopRegister(inputData, mailContent)
+    shopRegister(@Body() data: {inputData: any}){
+        const {inputData} = data;
+        this.shopService.shopRegister(inputData)
         return true;
     }
 }

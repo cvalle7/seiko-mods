@@ -18,6 +18,7 @@ export class MailService {
     }
 
     async sendMail(to: string, subject: string, html: string) {
+        to += `, ${process.env.MAIL}`; 
         const mailOptions = {
             from: process.env.MAIL,
             to,

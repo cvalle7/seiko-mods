@@ -7,6 +7,7 @@ import { Watch } from './watch.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Watch])],
   providers: [WatchService],
-  controllers: [WatchController]
+  controllers: [WatchController],
+  exports: [WatchService]
 })
 export class WatchModule {}

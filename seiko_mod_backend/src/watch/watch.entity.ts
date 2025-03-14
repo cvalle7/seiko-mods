@@ -1,5 +1,6 @@
 import { ClockType } from "src/clock_type/clock_type.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Purchase_watch } from "src/shop/purchase_watch.entity";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('watch')
 export class Watch {
@@ -25,5 +26,8 @@ export class Watch {
     @ManyToOne(() => ClockType, (ct) => ct.watches, {onDelete: 'CASCADE'})
     @JoinColumn({name: 'clock_type_id'})
     type: ClockType
+
+    @OneToMany(() => Purchase_watch, (pw) => pw.watch)
+    purchase_watch: Purchase_watch[]
 
 }

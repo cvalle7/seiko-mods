@@ -139,8 +139,7 @@ const loadWatchList = async () => {
 };
 
 const sendMail = async () => {
-    let mailContent = shopService.generateMailContent(watchList.value, payObject.value);
-    await shopService.sendData(payObject.value, mailContent);
+    await shopService.sendData(payObject.value);
     step.value = 0
     shopStore.shopList = [];
     comprado.value = true;

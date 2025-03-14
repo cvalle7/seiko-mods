@@ -9,6 +9,10 @@ import { ShopModule } from './shop/shop.module';
 import { MailService } from './mail/mail.service';
 import { MailModule } from './mail/mail.module';
 import { PaypalModule } from './paypal/paypal.module';
+import { Purchase } from './shop/purchase.entity';
+import { Purchase_watch } from './shop/purchase_watch.entity';
+import { MailConfigModule } from './mail_config/mail_config.module';
+import { Mail_config } from './mail_config/mail_config.entity';
 
 @Module({
   imports: [
@@ -23,14 +27,15 @@ import { PaypalModule } from './paypal/paypal.module';
         username: process.env.BD_USERNAME,
         password: process.env.BD_PASSWORD,
         database: process.env.BD_DATABASE,
-        entities: [ClockType, Watch],
-        synchronize: true
+        entities: [ClockType, Watch, Purchase, Purchase_watch, Mail_config],
+        synchronize: false
       }),
     ClockTypeModule,
     WatchModule,
     ShopModule,
     MailModule,
-    PaypalModule],
+    PaypalModule,
+    MailConfigModule],
   controllers: [],
   providers: [MailService],
 })
